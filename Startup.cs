@@ -26,6 +26,8 @@ namespace ticket_system
         {
             services.AddDbContext<UserContext>(op =>
                 op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<TicketContext>(op =>
+                op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
 
