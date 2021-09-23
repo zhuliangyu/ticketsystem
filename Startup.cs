@@ -59,6 +59,11 @@ namespace ticket_system
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            // app.UseAuthentication();
+            // app.UseAuthorization();
+            
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

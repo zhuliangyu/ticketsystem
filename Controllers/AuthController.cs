@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ticket_system.Dtos;
 using ticket_system.Services;
 using ticket_system.Helpers;
 using Microsoft.Extensions.Options;
+using ticket_system.Models;
 
 namespace ticket_system.Controllers
 {
@@ -29,7 +31,7 @@ namespace ticket_system.Controllers
         [HttpPost("login")]
         public IActionResult Login(AuthenticateRequest request)
         {
-            var user = _userService.GetUser(request.Username);
+            var user = _userService.GetUserByUsername(request.Username);
             
             if (user == null) return BadRequest(new {message = "User is not found"});
 
@@ -45,7 +47,12 @@ namespace ticket_system.Controllers
         [HttpGet("get")]
         public IActionResult Get()
         {
-            return Ok("Auth Get works");
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser != null && currentUser.Role == "admin")
+            {
+                return Ok("Auth Get works");
+            }
+            return Unauthorized(new { message = "Unauthorized" });
         }
     }
 }

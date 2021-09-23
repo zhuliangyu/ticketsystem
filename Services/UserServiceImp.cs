@@ -15,9 +15,14 @@ namespace ticket_system.Services
             _userContext = userContext;
         }
         
-        public User GetUser(string username)
+        public User GetUserByUsername(string username)
         {
             return _userContext.Users.FirstOrDefault(u => u.Username == username);
+        }
+
+        public User GetUserById(int id)
+        {
+            return _userContext.Users.FirstOrDefault(u => u.Id == id);
         }
     }
 }
