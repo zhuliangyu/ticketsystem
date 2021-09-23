@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ticket_system.Data;
+using ticket_system.Helpers;
 using ticket_system.Services;
 
 namespace ticket_system
@@ -29,6 +30,10 @@ namespace ticket_system
             services.AddControllersWithViews();
 
             services.AddScoped<IUserService, UserServiceImp>();
+            services.AddScoped<IJwtUtils, JwtUtils>();
+            
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
 
 
             // In production, the React files will be served from this directory
