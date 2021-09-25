@@ -11,6 +11,7 @@ export class Home extends Component {
     super(props);
     this.state = { 
       tickets: [], 
+      isEdit: false,
       
       id: '',
       summary: '',
@@ -78,6 +79,7 @@ export class Home extends Component {
     newState.summary = summary;
     newState.description = description;
     newState.creator = creator;
+    newState.isEdit = true;
 
     this.setState(newState, () => {
       // console.log("h68");
@@ -195,6 +197,11 @@ export class Home extends Component {
     }).then(() => {
         this.generateTicketsAfterEdit(ticketData, id)
       });
+    
+    // change the form to create mode
+    let newState = this.state;
+    newState.isEdit = false;
+    this.setState(newState)
   }
 
   renderTicketsTable(tickets) {
@@ -234,15 +241,22 @@ export class Home extends Component {
 
     return (
       <div>
-        <h1>Hello, {localStorage.getItem('username')}</h1>
-        {/* create form */}
-        <TicketForm parentCallback={this.handleCallBackCreateTicket}></TicketForm>
+        <h1>Welcome {localStorage.getItem('username')},</h1>
+        {this.state.isEdit
+        ?
+        <div>
+          <h1>Edit an existing ticket: </h1>
+          <TicketForm parentCallback={this.handleCallBackEditTicket} key={this.state.id} id={this.state.id} summary={this.state.summary} description={this.state.description}></TicketForm>
+        </div>
+        :
+        <div>
+          <h1>Create a new ticket: </h1>
+          <TicketForm parentCallback={this.handleCallBackCreateTicket}></TicketForm>
+        </div>
+        }
 
         {tableContent}
-
-        {/* edit form */}
-        <TicketForm parentCallback={this.handleCallBackEditTicket} key={this.state.id} id={this.state.id} summary={this.state.summary} description={this.state.description}></TicketForm>
-
+      
       </div>
     );
   }
