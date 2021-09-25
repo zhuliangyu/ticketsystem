@@ -174,6 +174,10 @@ export class Home extends Component {
     });
   }
 
+  getRole = () => {
+    return localStorage.getItem('role');
+  }
+
   handleCallBackEditTicket = (ticketData, id) => {
     
     let updatedTicket = {
@@ -226,9 +230,13 @@ export class Home extends Component {
               <td>{ticket.description}</td>
               <td>{ticket.creator}</td>
               <td>{ticket.isResolved ? 'Yes' : 'No'}</td>
-              <td><button onClick={() => {this.handleResolveTicket(ticket.id)}}>{ticket.isResolved ? 'Unresolve' : 'Resolve'}</button></td>
-              <td><button onClick={() => {this.handleEditTicket(ticket.id, ticket.summary, ticket.description, ticket.isResolved, ticket.creator)}}>Edit</button></td>
-              <td><button onClick={() => {this.handleDeleteTicket(ticket.id)}}>Del</button></td>
+              {this.getRole() === "rd" 
+                && <td><button onClick={() => {this.handleResolveTicket(ticket.id)}}>{ticket.isResolved ? 'Unresolve' : 'Resolve'}</button></td>
+              }
+              {this.getRole() === "qa" 
+                && <td><button onClick={() => {this.handleEditTicket(ticket.id, ticket.summary, ticket.description, ticket.isResolved, ticket.creator)}}>Edit</button></td>}
+              {this.getRole() === "qa" 
+                && <td><button onClick={() => {this.handleDeleteTicket(ticket.id)}}>Del</button></td>}
             </tr>
           )}
         </tbody>
@@ -249,6 +257,7 @@ export class Home extends Component {
           <TicketForm parentCallback={this.handleCallBackEditTicket} key={this.state.id} id={this.state.id} summary={this.state.summary} description={this.state.description}></TicketForm>
         </div>
         :
+        this.getRole() === "qa" && 
         <div>
           <h1>Create a new ticket: </h1>
           <TicketForm parentCallback={this.handleCallBackCreateTicket}></TicketForm>
