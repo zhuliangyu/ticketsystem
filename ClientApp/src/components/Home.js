@@ -18,6 +18,15 @@ export class Home extends Component {
       isResolved: false,
       creator: ''
     };
+
+    this.headers = {"Content-Type": "application/json"};
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.headers["Authorization"] = `Token ${token}`;
+    }
+
+    // console.log(this.headers);
+    
   }
 
   componentDidMount() {
@@ -43,7 +52,7 @@ export class Home extends Component {
 
   handleDeleteTicket = (id) => {
     // console.log("Del" + id);
-    fetch('api/tickets/' + id, { method: 'DELETE' })
+    fetch('api/tickets/' + id, { method: 'DELETE', headers: this.headers})
         .then(() => this.setState({ tickets: this.removeTicketById(id)}));
   }
 
@@ -103,21 +112,21 @@ export class Home extends Component {
 
   handleResolveTicket = (id) => {
     // console.log("Solve");
-    fetch('api/tickets/' + id, { 
+    fetch('api/tickets/resolve/' + id, { 
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify(this.generatePayloadAfterResolve(id)) 
-    }).then(() => this.setState({ tickets: this.generateTicketsAfterResolve(id)}));
+    })
+    .then(() => this.setState({ tickets: this.generateTicketsAfterResolve(id)}))
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   handleCallBackCreateTicket = (ticketData) => {
     fetch('api/tickets/', { 
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify(ticketData) 
     }).then((response) => {
       return response.json();
@@ -181,9 +190,7 @@ export class Home extends Component {
 
     fetch('api/tickets/' + id, { 
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify(updatedTicket) 
     }).then(() => {
         this.generateTicketsAfterEdit(ticketData, id)
@@ -227,7 +234,7 @@ export class Home extends Component {
 
     return (
       <div>
-        <h1>Hello, List all tickets</h1>
+        <h1>Hello, {localStorage.getItem('username')}</h1>
         {/* create form */}
         <TicketForm parentCallback={this.handleCallBackCreateTicket}></TicketForm>
 

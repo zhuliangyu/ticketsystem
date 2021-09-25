@@ -1,60 +1,72 @@
 import React, { Component } from 'react';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import  { Redirect } from 'react-router-dom'
 
 export class Login extends Component {
-  // static displayName = FetchData.name;
 
   constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    this.state = { username: '', password: '' };
   }
 
-  componentDidMount() {
-    this.populateWeatherData();
+  handleInputChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    this.setState({
+      [name]: value
+    });
   }
 
-  static renderForecastsTable(forecasts) {
-    return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
+  handleSubmit = (event) => {
+    event.preventDefault();
+    
+    fetch('api/login/', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state) 
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      // storage token
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('username', data.username)
+      localStorage.setItem('role', data.role)
+      this.props.history.push('/')
+    });
+
+
+    // this.props.parentCallback(this.state);
+
+    // console.log("lg32");
+    // console.log(this.state);
   }
 
   render() {
-    // let contents = this.state.loading
-    //   ? <p><em>Loading...</em></p>
-    //   : FetchData.renderForecastsTable(this.state.forecasts);
-
     return (
       <div>
-        <h1>Login</h1>
-        <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {/* {contents} */}
+        <h1>qa - qa
+        </h1>
+        <h1>rd - rd</h1>
+        <form>
+          <FormGroup>
+            <Label for="summary">Username</Label>
+            <Input type="text" name="username" id="username" onChange={this.handleInputChange} />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="password">Password</Label>
+            <Input type="text" name="password" id="password" onChange={this.handleInputChange} />
+          </FormGroup>
+
+          <Button onClick={this.handleSubmit}>Login</Button>
+        </form>
       </div>
     );
   }
 
-  async populateWeatherData() {
-    const response = await fetch('weatherforecast');
-    const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
-  }
+
 }

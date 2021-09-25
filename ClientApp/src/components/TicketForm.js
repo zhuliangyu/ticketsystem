@@ -33,6 +33,7 @@ export class TicketForm extends Component {
       // create ticket 
       ticket = {
         ... this.state,
+        creator: localStorage.getItem('username'),
         isResolve: false
       } 
       this.props.parentCallback(ticket);
