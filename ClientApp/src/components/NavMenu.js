@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import UserContext from '../UserContext'
+
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
+  static contextType = UserContext;
 
   constructor (props) {
     super(props);
@@ -23,6 +26,7 @@ export class NavMenu extends Component {
 
   signout = () => {
     localStorage.clear();
+    this.context.update({isLogin: false});
   }
 
   render () {
@@ -43,12 +47,16 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem> */}
-                <NavItem>
+                {
+                  !this.context.isLogin
+                  ? <NavItem>
                      <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" onClick={this.signout} to="/">Sign out</NavLink>
-                </NavItem>
+                    </NavItem>
+                  : <NavItem>
+                      <NavLink tag={Link} className="text-dark" onClick={this.signout} to="/">Sign out</NavLink>
+                    </NavItem>
+                }
+                
               </ul>
             </Collapse>
           </Container>

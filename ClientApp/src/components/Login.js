@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import  { Redirect } from 'react-router-dom'
+import UserContext from '../UserContext'
+
 
 export class Login extends Component {
+  static contextType = UserContext;
 
   constructor(props) {
     super(props);
@@ -37,6 +39,9 @@ export class Login extends Component {
       localStorage.setItem('role', data.role)
       this.props.history.push('/')
     });
+
+    // login is true
+    this.context.update({isLogin: true});
 
 
     // this.props.parentCallback(this.state);

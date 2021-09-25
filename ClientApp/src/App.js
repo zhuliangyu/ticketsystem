@@ -6,6 +6,7 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Login } from './components/Login';
 import { TicketForm } from './components/TicketForm';
+import { UserProvider } from './UserContext'
 
 import './custom.css'
 
@@ -14,13 +15,15 @@ export default class App extends Component {
 
   render () {
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-        <Route path='/login' component={Login} />
-        <Route path='/ticketform' component={TicketForm} />
-      </Layout>
+      <UserProvider value={{isLogin: false}}>
+        <Layout>
+          <Route exact path='/' component={Home} />
+          <Route path='/counter' component={Counter} />
+          <Route path='/fetch-data' component={FetchData} />
+          <Route path='/login' component={Login} />
+          <Route path='/ticketform' component={TicketForm} />
+        </Layout>
+      </UserProvider>
     );
   }
 }
