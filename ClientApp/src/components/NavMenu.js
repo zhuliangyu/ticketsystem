@@ -21,6 +21,10 @@ export class NavMenu extends Component {
     });
   }
 
+  signout = () => {
+    localStorage.clear();
+  }
+
   render () {
     return (
       <header>
@@ -40,7 +44,10 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                     <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" onClick={this.signout}>Sign out</NavLink>
                 </NavItem>
               </ul>
             </Collapse>
