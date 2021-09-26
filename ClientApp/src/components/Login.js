@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Alert} from 'reactstrap';
 import UserContext from '../UserContext'
 
 
@@ -53,9 +53,14 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <h1>qa - qa
-        </h1>
-        <h1>rd - rd</h1>
+        <Alert color="danger">
+        Test account for QA role: username: qa; password: qa
+        </Alert>
+
+        <Alert color="danger">
+        Test account for RD role: username: rd; password: rd
+        </Alert>
+        
         <form>
           <FormGroup>
             <Label for="summary">Username</Label>
@@ -64,7 +69,7 @@ export class Login extends Component {
 
           <FormGroup>
             <Label for="password">Password</Label>
-            <Input type="text" name="password" id="password" onChange={this.handleInputChange} />
+            <Input type="password" name="password" id="password" onChange={this.handleInputChange} />
           </FormGroup>
 
           <Button onClick={this.handleSubmit}>Login</Button>
