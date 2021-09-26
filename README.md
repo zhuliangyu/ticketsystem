@@ -6,7 +6,7 @@
 - Only RD can resolve a bug.
 - Summary field and Description filed are required of a bug when QA is creating a bug.
 
-### Backend: .NET core 5.0 MVC Web api + JWT authentication authorization + MSSQL
+### Backend: .NET core 5.0 MVC Web api + JWT authentication + authorization + SQL SERVER 2019 Docker
 ### Frontend: React
 
 ### Task 1 - The use cases.
@@ -30,34 +30,9 @@ Phase I
 - created, edited, deleted by Admin
 - read by Admin
 
-###Task 3 - System design
+### Task 3 - System design
 #### data model
-ticket
-- id(PK)
-- ticketTypeId(FK)
-- summary
-- description
-- severity
-- priority
-- createdAt(timestamp)
-- authorId(FK)
-- resolverId(FK)
-- resolveAt(timestamp)
-- isResolved(bool)
-
-ticketType
-- id(PK)
-- type(Varchar)
-
-user
-- id(PK)
-- roleID(FK)
-- createdAt(timestamp)
-- creatorId(FK)
-
-role
-- id(PK)
-- type
+![](images/ERD.jpg)
 
 #### class diagram
 ![](images/class_diagram.jpg)
@@ -65,3 +40,5 @@ role
 #### UI mock up
 ![](images/mockup_01.jpg)
 ![](images/mockup_02.jpg)
+
+### Design the Web API(Json format) 
