@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Alert} from 'reactstrap';
+import { Button, FormGroup, Label, Input, Alert} from 'reactstrap';
 import UserContext from '../UserContext'
 
 
@@ -42,12 +42,7 @@ export class Login extends Component {
 
     // login is true
     this.context.update({isLogin: true});
-
-
-    // this.props.parentCallback(this.state);
-
-    // console.log("lg32");
-    // console.log(this.state);
+    
   }
 
   render() {

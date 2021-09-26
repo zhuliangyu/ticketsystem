@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 
 export class TicketForm extends Component {
   static displayName = TicketForm.name;
 
   constructor(props) {
     super(props);
-    // console.log("123");
-    // console.log(this.props.summary);
-
+    
     this.state = { summary: this.props.summary,  description: this.props.description};
-    // console.log("123");
-    // console.log(this.state);
   }
 
   handleInputChange = (event) => {
@@ -22,8 +18,6 @@ export class TicketForm extends Component {
     this.setState({
       [name]: value
     });
-    // console.log('ticketForm');
-    // console.log(this.state);
   }
 
   handleSubmit = (event) => {
@@ -40,9 +34,6 @@ export class TicketForm extends Component {
     } else {
       // update ticket
       ticket = {... this.state}
-
-      // console.log("TF40");
-      // console.log(ticket);
       
       this.props.parentCallback(ticket, this.props.id);
     }
@@ -50,7 +41,6 @@ export class TicketForm extends Component {
   }
 
   render() {
-    // console.log(this.props);
     return (
       <div>
         <form>

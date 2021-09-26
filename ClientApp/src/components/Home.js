@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import {NavLink } from 'reactstrap';
-// import { Link } from 'react-router-dom';
 import { TicketForm } from './TicketForm';
 
 
@@ -25,9 +23,6 @@ export class Home extends Component {
     if (token) {
       this.headers["Authorization"] = `Token ${token}`;
     }
-
-    // console.log(this.headers);
-    
   }
 
   componentDidMount() {
@@ -39,11 +34,7 @@ export class Home extends Component {
     const data = await response.json();
     this.setState({tickets: data})
   }
-
-  handleCreateTicket = () => {
-    console.log("Add");
-  }
-
+  
   removeTicketById = (id) => {
     let tickets = this.state.tickets.filter((ticket) => {
       return ticket.id !== id;
@@ -52,28 +43,18 @@ export class Home extends Component {
   }
 
   handleDeleteTicket = (id) => {
-    // console.log("Del" + id);
     fetch('api/tickets/' + id, { method: 'DELETE', headers: this.headers})
         .then(() => this.setState({ tickets: this.removeTicketById(id)}));
   }
 
   handleEditTicket = (id, summary, description, isResolved, creator) => {
-    // console.log("Edit");
-    // console.log(id);
-
-    // console.log("h53");
-    // console.log(id + summary + description + isResolved + creator);
     let updatedTicket = {
       id: id,
       summary: summary,
-      description, description,
-      isResolved, isResolved,
+      description: description,
+      isResolved: isResolved,
       creator: creator
     }
-    // console.log("h62");
-    // console.log(updatedTicket);
-
-    // this.setState({id: id, summary: summary, description: description, isResolved: isResolved, creator: creator})
     let newState = {... this.state};
     newState.id = id;
     newState.summary = summary;
@@ -82,9 +63,6 @@ export class Home extends Component {
     newState.isEdit = true;
 
     this.setState(newState, () => {
-      // console.log("h68");
-      // console.log(newState);
-      // console.log(this.state);
     })
     
     
@@ -108,12 +86,10 @@ export class Home extends Component {
         ticket.isResolved = !ticket.isResolved;
       }
     }
-    // console.log(tickets);
     return tickets;
   }
 
   handleResolveTicket = (id) => {
-    // console.log("Solve");
     fetch('api/tickets/resolve/' + id, { 
       method: 'PUT',
       headers: this.headers,
@@ -138,22 +114,15 @@ export class Home extends Component {
   }
 
   generateTicketsAfterEdit = (ticket, id) => {
-    // console.log('H128');
-    // console.log(newTicket);
-
     let newState = {... this.state};
     // update curTicket
     newState.summary = ticket.summary;
     newState.description = ticket.description;
-
-    // console.log("h137");
-    // console.log(newState);
-
+    
     // remove id ticket from newstate.tickets
     newState.tickets = newState.tickets.filter((ele) => {
       return ele.id !== id
     })
-
     
     // append modified ticket to state.tickets
     newState.tickets.push({
@@ -163,14 +132,9 @@ export class Home extends Component {
       creator: this.state.creator,
       isResolved: this.state.isResolved
     })
-
-    // console.log("h137");
-    // console.log(newState);
-
+    
     // update state
     this.setState(newState, () => {
-      // console.log("h158");
-      // console.log(this.state);
     });
   }
 
@@ -190,10 +154,7 @@ export class Home extends Component {
 
     updatedTicket.summary = ticketData.summary;
     updatedTicket.description = ticketData.description;
-
-    // console.log("ticket after updated");
-    // console.log(updatedTicket);
-
+    
     fetch('api/tickets/' + id, { 
       method: 'PUT',
       headers: this.headers,
@@ -209,8 +170,6 @@ export class Home extends Component {
   }
 
   renderTicketsTable(tickets) {
-    // console.log(tickets);
-
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
