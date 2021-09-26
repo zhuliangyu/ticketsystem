@@ -41,4 +41,201 @@ Phase I
 ![](images/mockup_01.jpg)
 ![](images/mockup_02.jpg)
 
-### Design the Web API(Json format) 
+### Design the Web API(Json format)
+
+#### login
+- post `/api/v1/login/`
+- request payload
+```json
+{
+  "username": "...",
+  "password": "..."
+}
+```
+- response
+```json
+{
+  "userid": 1,
+  "username": "...",
+  "toekn": "....",
+  "role": "QA"
+}
+```
+#### CRUD ticket
+- get `/api/v1/tickets/`
+- get `/api/v1/tickets/{id}`
+- post `/api/v1/tickets/`
+- put `/api/v1/tickets/{id}`
+- delete `/api/v1/tickets/{id}`
+
+#### Resolve a ticket
+
+put `/api/v1/tickets`
+
+request payload
+```json
+{
+  "id": 1,
+  "isResolve": true
+}
+```
+
+#### tickets filter:
+- get `/api/v1/tickets/?type={ticketTypeId}`
+- get `/api/v1/tickets/?severity={severityId}`
+- get `/api/v1/tickets/?priority={priorityId}`
+
+#### CRUD user
+- get `/api/v1/users/`
+- get `/api/v1/users/{id}`
+- post `/api/v1/users/`
+- put `/api/v1/users/{id}`
+- delete `/api/v1/users/{id}`
+
+
+**Show all Tickets**
+----
+Returns json data about a single ticket.
+
+* **URL**
+
+  `/api/v1/tickets/`
+
+* **Method:**
+
+  `GET`
+
+[comment]: <> (* GET | POST | DELETE | PUT)
+
+* **URL Params**
+
+    `None`
+
+[comment]: <> (  **Required:**)
+
+[comment]: <> (  `id=[integer]`)
+
+* **Data Params**
+
+  `None`
+
+[comment]: <> (    ```json)
+
+[comment]: <> (    { "id" : 12, )
+
+[comment]: <> (      "summary" : "Button is not shown.", )
+
+[comment]: <> (      "type": "asd" )
+
+[comment]: <> (    })
+
+[comment]: <> (    ```)
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+  ```json
+  [ 
+    {
+    "id" : 12, 
+    "summary" : "Button is not shown.",
+    "description": "Button is not shown base on mobile layout", 
+    "type": "Bug",
+    "severity": "low",
+    "priority": "low",
+    "author": "Ricky",
+    "isResolve": false,
+    "resolveBy": "Henry"
+   } ,
+   {
+    "id" : 12, 
+    "summary" : "Button is not shown.",
+    "description": "Button is not shown base on mobile layout", 
+    "type": "Bug",
+    "severity": "low",
+    "priority": "low",
+    "author": "Ricky",
+    "isResolve": false,
+    "resolveBy": "Henry"
+   }
+  ]
+  ```
+
+[comment]: <> (* **Error Response:**)
+
+[comment]: <> (    * **Code:** 404 NOT FOUND <br />)
+
+[comment]: <> (      **Content:** `{ error : "Ticket doesn't exist" }`)
+
+[comment]: <> (  OR)
+
+[comment]: <> (    * **Code:** 401 UNAUTHORIZED <br />)
+
+[comment]: <> (      **Content:** `{ error : "You are unauthorized to make this request." }`)
+
+
+
+**Show Ticket**
+----
+Returns json data about a single ticket.
+
+* **URL**
+
+  `/api/v1/tickets/:id`
+
+* **Method:**
+
+  `GET`
+* 
+[comment]: <> (* GET | POST | DELETE | PUT)
+
+* **URL Params**
+
+   **Required:**
+
+   `id=[integer]`
+
+* **Data Params**
+
+  None
+
+[comment]: <> (    ```json)
+
+[comment]: <> (    { "id" : 12, )
+
+[comment]: <> (      "summary" : "Button is not shown.", )
+
+[comment]: <> (      "type": "asd" )
+
+[comment]: <> (    })
+
+[comment]: <> (    ```)
+
+  * **Success Response:**
+
+      * **Code:** 200 <br />
+        **Content:** 
+    ```json
+    { "id" : 12, 
+      "summary" : "Button is not shown.",
+      "description": "Button is not shown base on mobile layout", 
+      "type": "Bug",
+      "severity": "low",
+      "priority": "low",
+      "author": "Ricky",
+      "isResolve": false,
+      "resolveBy": "Henry" 
+    }
+    ```
+
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND <br />
+      **Content:** `{ error : "Ticket doesn't exist" }`
+
+[comment]: <> (  OR)
+
+[comment]: <> (    * **Code:** 401 UNAUTHORIZED <br />)
+
+[comment]: <> (      **Content:** `{ error : "You are unauthorized to make this request." }`)
